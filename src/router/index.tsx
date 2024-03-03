@@ -1,5 +1,6 @@
+import { Auth, Guest } from "../utils/auth";
+
 import AppLayout from "../layouts/AppLayout";
-import { Auth } from "../utils/auth";
 import GuestLayout from "../layouts/GuestLayout";
 import Home from "../views/Home";
 import Login from "../views/auth/Login";
@@ -28,11 +29,19 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "login",
-                element: <Login />,
+                element: (
+                    <Guest>
+                        <Login />
+                    </Guest>
+                ),
             },
             {
                 path: "register",
-                element: <Register />,
+                element: (
+                    <Guest>
+                        <Register />
+                    </Guest>
+                ),
             },
         ],
     },

@@ -4,4 +4,9 @@ const https = axios.create({
     timeout: 5000,
 });
 
+https.interceptors.request.use((config) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
+    return config;
+});
+
 export default https;

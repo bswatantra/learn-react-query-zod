@@ -8,6 +8,5 @@ export function Auth({ children }: { children: React.ReactNode }) {
 
 
 export function Guest({ children }: { children: React.ReactNode }) {
-
-    return !token ? children : <Navigate to={'/'} />;
+    return token ? <Navigate to={'/'} /> : children;
 }
