@@ -1,10 +1,9 @@
-import { Gradient } from '../components/gradient.tsx'
-import { Grid } from '../components/grid.tsx'
+import ProductList from "../components/product/list"
+
 const Home = () => {
     return (
         <>
-            <Gradient />
-            <Grid />
+            <ProductList/>
         </>
     )
 }
