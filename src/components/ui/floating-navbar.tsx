@@ -44,14 +44,7 @@ export const FloatingNav = ({
   });
 
 
-  const { data: profile, isLoading, isError, error } = useQuery({ queryKey: ['profile'], queryFn: me })
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (isError || !profile) {
-    return <p>Error: {error?.message || 'Failed to fetch profile'}</p>;
-  }
+  const { data: profile } = useQuery({ queryKey: ['profile'], queryFn: me })
 
   return (
     <AnimatePresence mode="wait">
@@ -72,7 +65,11 @@ export const FloatingNav = ({
           className
         )}
       >
-        {navItems.map((navItem: any, idx: number) => (
+        {navItems.map((navItem: {
+          name: string;
+          link: string;
+          icon?: JSX.Element;
+        }, idx: number) => (
           <Link
             key={`link=${idx}`}
             to={navItem.link}
@@ -85,7 +82,7 @@ export const FloatingNav = ({
           </Link>
         ))}
         <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full">
-          <span>{profile.name}</span>
+          <span>{profile?.name}</span>
           <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
         </button>
       </motion.div>
