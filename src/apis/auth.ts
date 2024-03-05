@@ -26,7 +26,7 @@ export async function login(data: TLoginSchema) {
 }
 
 export async function me() {
-    const response = await https.get("/api/profile")
+    const response = await https.get("/api/user/profile")
     return response.data
 }
 
