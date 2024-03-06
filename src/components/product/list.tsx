@@ -11,11 +11,8 @@ const List = () => {
 
 
     const { data: products, isLoading, isError, error } = useQuery({ queryKey: ['products', filters], queryFn: () => fetchProducts(filters) })
-    if (isLoading) {
-        return <p>Loading...</p>;
-    }
 
-    if (isError || !products) {
+    if (!isLoading && isError || !products) {
         return <p>Error: {error?.message || 'Failed to fetch skills'}</p>;
     }
 
@@ -34,10 +31,10 @@ const List = () => {
                     name="skip"
                     onChange={handleFilters}
                 >
-                    <SelectItem key={10}>
+                    <SelectItem key={10} value={10}>
                         10
                     </SelectItem>
-                    <SelectItem key={20}>
+                    <SelectItem key={20} value={20}>
                         20
                     </SelectItem>
                 </Select>
@@ -48,17 +45,22 @@ const List = () => {
                     name="limit"
                     onChange={handleFilters}
                 >
-                    <SelectItem key={5}>
+                    <SelectItem key={5} value={5}>
                         5
                     </SelectItem>
-                    <SelectItem key={10} >
+                    <SelectItem key={10} value={10}>
                         10
                     </SelectItem>
-                    <SelectItem key={20}>
+                    <SelectItem key={20} value={20}>
                         20
                     </SelectItem>
                 </Select>
             </div>
+
+            {
+                isLoading && <h1>Loading.......</h1>
+            }
+
             <HoverEffect items={products.products} />
         </div>
     )
