@@ -1,6 +1,7 @@
-import axios from "axios"
+import https from "../utils/axios"
 
 export async function products() {
-    const response = await axios.get("https://dummyjson.com/products")
-    return response.data
+    const params = {}
+    const response = await https.get('/api/products', { params })
+    return response?.data?.data
 }
