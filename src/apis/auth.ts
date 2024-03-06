@@ -20,7 +20,7 @@ const loginGrant: TLoginGrantType = {
 export async function login(data: TLoginSchema) {
     await https.post("/oauth/token", { ...data, ...loginGrant }).then((response) => {
         storeToken(response.data.access_token)
-            }).catch((error) => {
+    }).catch((error) => {
         console.log(error)
     })
 }
