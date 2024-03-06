@@ -3,15 +3,24 @@ import { Input, Select, SelectItem } from "@nextui-org/react";
 import { HoverEffect } from "../ui/card-hover-effect";
 import { products as fetchProducts } from "../../apis/product"
 import { useQuery } from "@tanstack/react-query"
+import { useState } from "react";
 
 const List = () => {
-    const { data: products, isLoading, isError, error } = useQuery({ queryKey: ['products'], queryFn: fetchProducts })
+
+    const [filters, setFilters] = useState({})
+
+
+    const { data: products, isLoading, isError, error } = useQuery({ queryKey: ['products', filters], queryFn: () => fetchProducts(filters) })
     if (isLoading) {
         return <p>Loading...</p>;
     }
 
     if (isError || !products) {
         return <p>Error: {error?.message || 'Failed to fetch skills'}</p>;
+    }
+
+    const handleFilters = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+        setFilters({ ...filters, [event.target.name]: event.target.value });
     }
 
     return (
@@ -22,23 +31,30 @@ const List = () => {
                     size={'sm'}
                     label="Skip"
                     className="max-w-xs"
+                    name="skip"
+                    onChange={handleFilters}
                 >
-                    <SelectItem key={'10'} value='10'>
+                    <SelectItem key={10}>
                         10
                     </SelectItem>
-                    <SelectItem key={'10'} value='10'>
-                        10
+                    <SelectItem key={20}>
+                        20
                     </SelectItem>
                 </Select>
                 <Select
                     size={'sm'}
                     label="Per Page"
                     className="max-w-xs"
+                    name="limit"
+                    onChange={handleFilters}
                 >
-                    <SelectItem key={'10'} value='10'>
+                    <SelectItem key={5}>
+                        5
+                    </SelectItem>
+                    <SelectItem key={10} >
                         10
                     </SelectItem>
-                    <SelectItem key={'20'} value='20'>
+                    <SelectItem key={20}>
                         20
                     </SelectItem>
                 </Select>
