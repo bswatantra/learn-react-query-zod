@@ -1,6 +1,7 @@
 import { Input, Select, SelectItem } from "@nextui-org/react";
 
 import { HoverEffect } from "../ui/card-hover-effect";
+import ProductListSkeleton from "../skeletons/product/product-list-skeleton";
 import { products as fetchProducts } from "../../apis/product"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react";
@@ -11,7 +12,7 @@ const List = () => {
 
 
     const { data: products, isLoading, isError, error } = useQuery({ queryKey: ['products', filters], queryFn: () => fetchProducts(filters) })
-    
+
     if (!isLoading && isError) {
         return <p>Error: {error?.message || 'Failed to fetch skills'}</p>;
     }
@@ -58,7 +59,7 @@ const List = () => {
             </div>
 
             {
-                isLoading && <h1>Loading.......</h1>
+                isLoading && <ProductListSkeleton length={6} />
             }
 
             {products &&
