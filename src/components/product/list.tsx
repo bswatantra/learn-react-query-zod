@@ -11,8 +11,8 @@ const List = () => {
 
 
     const { data: products, isLoading, isError, error } = useQuery({ queryKey: ['products', filters], queryFn: () => fetchProducts(filters) })
-
-    if (!isLoading && isError || !products) {
+    
+    if (!isLoading && isError) {
         return <p>Error: {error?.message || 'Failed to fetch skills'}</p>;
     }
 
@@ -61,7 +61,9 @@ const List = () => {
                 isLoading && <h1>Loading.......</h1>
             }
 
-            <HoverEffect items={products.products} />
+            {products &&
+                <HoverEffect items={products?.products} />
+            }
         </div>
     )
 }

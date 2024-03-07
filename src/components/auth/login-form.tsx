@@ -5,13 +5,20 @@ import { TLoginSchema, loginSchema } from "../../types/auth"
 import { BackgroundGradient } from "../ui/background-gradient"
 import { login } from "../../apis/auth";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginForm = () => {
+
+    const navigate = useNavigate();
+
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<TLoginSchema>({ resolver: zodResolver(loginSchema), });
 
     const mutation = useMutation({
-        mutationFn: login
+        mutationFn: login,
+        onSuccess: async () => {
+            await navigate('/')
+        },
     });
 
     const onSubmit: SubmitHandler<TLoginSchema> = async data => {
