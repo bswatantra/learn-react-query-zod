@@ -14,7 +14,7 @@ const List = () => {
     const { data: products, isLoading, isError, error } = useQuery({ queryKey: ['products', filters], queryFn: () => fetchProducts(filters) })
 
     if (!isLoading && isError) {
-        return <p>Error: {error?.message || 'Failed to fetch skills'}</p>;
+        return <p>Error: {error?.message || 'Failed to fetch products'}</p>;
     }
 
     const handleFilters = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
