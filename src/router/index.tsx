@@ -4,7 +4,9 @@ import AppLayout from "../layouts/AppLayout";
 import GuestLayout from "../layouts/GuestLayout";
 import Home from "../views/Home";
 import Login from "../views/auth/Login";
+import NotFound from "../views/errors/404";
 import Register from "../views/auth/Register";
+import ShowProduct from "../views/product/Show";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -17,6 +19,21 @@ const router = createBrowserRouter([
                 element: (
                     <Auth>
                         <Home />
+                    </Auth>
+                ),
+            },
+        ],
+    },
+
+    {
+        path: "/products",
+        element: <AppLayout />,
+        children: [
+            {
+                path: ":id",
+                element: (
+                    <Auth>
+                        <ShowProduct />
                     </Auth>
                 ),
             },
@@ -42,6 +59,18 @@ const router = createBrowserRouter([
                         <Register />
                     </Guest>
                 ),
+            },
+        ],
+    },
+
+
+    {
+        path: "/errors",
+        element: <GuestLayout />,
+        children: [
+            {
+                path: "not-found",
+                element: <NotFound />
             },
         ],
     },

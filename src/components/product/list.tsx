@@ -22,9 +22,12 @@ const List = () => {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-8 py-10">
+        <>
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4 shadow-md p-4 rounded-lg border border-zinc-300">
-                <Input size={'sm'} type="text" label="Search" />
+                <Input size={'sm'} type="text" label="Search"
+                    name="search"
+                    onChange={handleFilters}
+                />
                 <Select
                     size={'sm'}
                     label="Skip"
@@ -65,7 +68,7 @@ const List = () => {
             {products &&
                 <HoverEffect items={products?.products} />
             }
-        </div>
+        </>
     )
 }
 
