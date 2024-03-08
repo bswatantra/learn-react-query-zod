@@ -10,23 +10,23 @@ https.interceptors.request.use((config) => {
     return config;
 });
 
-// https.interceptors.response.use(
-//     (response) => {
-//         return response;
-//     },
-//     (error) => {
-//         switch (error.response.status) {
-//             case 401:
-//                 localStorage.removeItem("access_token");
-//                 break;
+https.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        switch (error.response.status) {
+            case 401:
+                localStorage.removeItem("access_token");
+                break;
 
-//             // case 404:
-//             //   window.location.href = "catchAll";
-//             //   break;
-//         }
-//         return Promise.reject(error);
-//     }
-// );
+            case 404:
+              window.location.href = "/errors/not-found";
+              break;
+        }
+        return Promise.reject(error);
+    }
+);
 
 
 export default https;
