@@ -18,6 +18,7 @@ const LoginForm = () => {
         mutationKey: ['login'],
         mutationFn: login,
         onSuccess: (data) => {
+            console.log(data)
             if (data.status === 200) {
                 storeToken(data.data.access_token);
                 navigate("/")
