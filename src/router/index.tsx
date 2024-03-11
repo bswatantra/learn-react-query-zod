@@ -1,4 +1,4 @@
-import { Auth, Guest } from "../utils/auth";
+import { Auth, Guest } from "../utils/middleware";
 
 import AppLayout from "../layouts/AppLayout";
 import GuestLayout from "../layouts/GuestLayout";

@@ -1,9 +1,9 @@
 import { Button, Input } from "@nextui-org/react"
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TLoginSchema, loginSchema } from "../../types/auth"
+import { login, storeToken } from "../../apis/auth";
 
 import { BackgroundGradient } from "../ui/background-gradient"
-import { login } from "../../apis/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,17 +12,25 @@ const LoginForm = () => {
 
     const navigate = useNavigate();
 
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<TLoginSchema>({ resolver: zodResolver(loginSchema), });
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<TLoginSchema>({ resolver: zodResolver(loginSchema), });
 
     const mutation = useMutation({
+        mutationKey: ['login'],
         mutationFn: login,
-        onSuccess: async () => {
-            await navigate('/')
-        },
+        onSuccess: (data) => {
+            if (data.status === 200) {
+                storeToken(data.data.access_token);
+                navigate("/")
+            }
+        }
     });
 
     const onSubmit: SubmitHandler<TLoginSchema> = async data => {
-        mutation.mutate(data)
+        try {
+            await mutation.mutateAsync(data)
+        } catch (error) {
+            setError('login', { message: error?.response?.data?.message });
+        }
     };
     return (
         <BackgroundGradient className="rounded-[22px] max-w-7xl sm:p-10 bg-white dark:bg-zinc-900">
@@ -43,7 +51,7 @@ const LoginForm = () => {
                             errorMessage={errors.password?.message || ''}
                         />
                     </div>
-
+                    <p className="text-red-500 text-semibold">{errors?.login?.message || ''}</p>
                 </div>
                 <Button type='submit' color="primary" variant="bordered" isLoading={isSubmitting}>Login</Button>
             </form>

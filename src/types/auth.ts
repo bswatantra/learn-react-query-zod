@@ -4,6 +4,7 @@ export const loginSchema = z
     .object({
         username: z.string().email(),
         password: z.string().min(4, "Password must be at least 4 characters"),
+        login: z.string().optional()
     })
 export type TLoginSchema = z.infer<typeof loginSchema>;
 

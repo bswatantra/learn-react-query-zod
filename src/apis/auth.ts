@@ -18,11 +18,7 @@ const loginGrant: TLoginGrantType = {
 
 
 export async function login(data: TLoginSchema) {
-    await https.post("/oauth/token", { ...data, ...loginGrant }).then((response) => {
-        storeToken(response.data.access_token)
-    }).catch((error) => {
-        console.log(error)
-    })
+    return await https.post("/oauth/token", { ...data, ...loginGrant })
 }
 
 export async function me() {
@@ -31,6 +27,6 @@ export async function me() {
 }
 
 
-function storeToken(token: string) {
+export function storeToken(token: string) {
     localStorage.setItem('access_token', token)
 }

@@ -1,3 +1,4 @@
+import Detail from "../../components/product/detail";
 import { productShow } from "../../apis/product"
 import { useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
@@ -15,8 +16,9 @@ const ShowProduct = () => {
             }
 
             {product &&
-                <div> {product.title}</div>
+                <Detail product={product} />
             }
+
         </>
     )
 }
